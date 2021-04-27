@@ -14,7 +14,7 @@ class Poll(models.Model):
         auto_now=True
     )
 
-    end_date = models.DateField(
+    end_date = models..DateField(
         verbose_name='Poll end date',
         default=date(2100, 12,31)
     )
