@@ -44,6 +44,7 @@ URL: api/v1/poll/admin/create/
 
     ...
 ]
+
 URL: admin/list/
 
 3. View details about poll - GET command, update pholl - PUT command, delete poll - DELETE command (for admin account). pk - primarykey.
@@ -53,6 +54,7 @@ URL: admin/detail/<int:pk>/
 4. View questions by poll primarykey. If pk is 0 all questions will return. Answer variants are strings separated with symbol "|".
 
 question_type is enumeration
+
 QUESTION_TYPE = (
         (1, 'Text answer'),
         (2, 'One answer select'),
@@ -60,6 +62,7 @@ QUESTION_TYPE = (
     ) 
 
 output format:
+
 [
     {
         "id": 1,
@@ -71,10 +74,13 @@ output format:
     },
     ...
 ]
+
 URL: admin/question/list/<int:pk>/
 
 5. Create new question (for admin account).
+
 Input parameters:
+
 {
     "poll": 1, 
     "text": "Question text",
@@ -87,7 +93,9 @@ Input parameters:
 URL: admin/question/create/
 
 6. View question detail by primarykey (for admin account).
+
 Otput format:
+
 {
     "id": 1,
     "text": "Apple is ...",
@@ -101,7 +109,9 @@ Otput format:
 URL: admin/question/detail/<int:pk>/
 
 7. View active polls when end_date greater and equal current date.
+
 output format:
+
 [
     {
         "id": 1,
@@ -116,7 +126,9 @@ output format:
 URL: user/list/
 
 8. View all questions for poll by primarykey.
+
 output format:
+
 [
     {
         "pk": 1,
@@ -131,17 +143,20 @@ output format:
         "answer_variants": ""
     }
 ]
+
 URL: user/question/list/<int:pk>/
 
 9. Start new poll.
 
 Input data:
+
 {
     "user_id": 123,
     "poll": 2
 }
 
 Output data:
+
 {
     "id": 3,
     "user_id": 123,
@@ -151,7 +166,9 @@ Output data:
 URL: user/start/
 
 10. Send answer.
+
 Input data:
+
 {
     "answer": "laptop",
     "user_poll": 2,
@@ -159,6 +176,7 @@ Input data:
 }
 
 Output data:
+
 {
     "id": 5,
     "answer": "laptop",
@@ -169,6 +187,7 @@ Output data:
 URL: user/answer/
 
 11. Users polls history view.
+
 Output data:
 
 [
