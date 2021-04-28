@@ -1,8 +1,10 @@
 from django.urls import path
+from . import views
 
 
 app_name = 'poll'
 
 urlpatterns = [
-    # path('poll/active-polls/', views.PollsListView.as_view(), name='active-polls'),
+    path('create-poll/', views.CreatePollView.as_view()),
+    path('list-active-polls/', views.ListActivePollsView.as_view()),
 ]
