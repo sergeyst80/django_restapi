@@ -25,17 +25,20 @@ class Poll(models.Model):
         max_length=200
     )
 
+    def __str__(self):
+        return f'Poll #{self.pk} "{self.name}"'
+
 
 class Question(models.Model):
-    poll_id = models.ForeignKey(
-        'Poll',
+    poll = models.ForeignKey(
+        Poll,
         verbose_name='Poll',
         on_delete=models.CASCADE,
-        related_name='questions'
+        related_name='poll_questions'
     )
     
     text = models.CharField(
-        verbose_name='Question',
+        verbose_name='Question text',
         max_length=200,
     )
     
@@ -50,32 +53,24 @@ class Question(models.Model):
         choices=QUESTION_TYPE
     )
 
-    answer = models.CharField(
-        verbose_name='Answer',
-        max_length=80
+    answer_variants = models.TextField(
+        verbose_name='Answer variants',
+        max_length=1000,
+        blank=True
     )
 
-class Answer(models.Model):
-    user_id = models.IntegerField(
-        verbose_name='User ID'
+    correct_answer = models.CharField(
+        verbose_name='Correct answer',
+        max_length=200
     )
 
-    question = models.ForeignKey(
-        'Question',
-        on_delete=models.CASCADE,
-        verbose_name='Question',
-        related_name='answers'
-    )
-
-    answer = models.CharField(
-        verbose_name='Answer',
-        max_length=80
-    )
+    def __str__(self):
+        return f'Question #{self.pk} for poll #{self.poll_id}'
 
 
-class PollsHistory(models.Model):
+class UserPoll(models.Model):
     poll = models.ForeignKey(
-        'Poll',
+        Poll,
         verbose_name='Poll',
         on_delete=models.CASCADE
     )
@@ -83,3 +78,27 @@ class PollsHistory(models.Model):
     user_id = models.IntegerField(
         verbose_name='User iD'
     )
+    
+
+class Answer(models.Model):
+    user_poll = models.ForeignKey(
+        UserPoll,
+        on_delete=models.CASCADE,
+        verbose_name='User poll',
+        related_name='poll_answers'
+    )
+
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE,
+        verbose_name='Question',
+        related_name='question_answers'
+    )
+
+    answer = models.CharField(
+        verbose_name='Answer',
+        max_length=200
+    )
+
+    def __str__(self):
+        return f'Answer #{self.pk}, question #{self.question} poll #{self.poll}'
